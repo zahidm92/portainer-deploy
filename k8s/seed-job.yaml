@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seed-db
+spec:
+  template:
+    spec:
+      containers:
+      - name: seed
+        image: haircut-backend:latest
+        command: ["npm", "run", "seed"]
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_USER
+          value: root
+        - name: DB_PASS
+          value: password
+        - name: DB_NAME
+          value: salon_db
+      restartPolicy: Never
+  backoffLimit: 4
